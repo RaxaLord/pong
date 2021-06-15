@@ -7,7 +7,7 @@ const keyz1 = { ArrowRight: false, ArrowLeft: false, ArrowUp: false, ArrowDown: 
 const player2 = { x: 550, y: 50, speed:5, width:15, height:100};
 const keyz2 = { KeyD: false, KeyA: false, KeyW: false, KeyS: false };
 
-draw();
+requestAnimationFrame(draw);
 
 document.addEventListener('keydown', keyDown);
 document.addEventListener('keyup', keyUp);
@@ -20,8 +20,6 @@ function keyDown(e) {
     if (e.code in keyz2) {
         keyz2[e.code] = true;
     }
-    // console.log(e.code)
-    move();
 }
 
 // function to follow key release
@@ -32,7 +30,6 @@ function keyUp(e) {
     if (e.code in keyz2) {
         keyz2[e.code] = false;
     }
-    // console.log(keyz2)
 }
 
 // moving function
@@ -43,8 +40,28 @@ function move() {
 
     if (keyz2.KeyD) {player2.x += player2.speed} else if (keyz2.KeyA) {player2.x -= player2.speed};
     if (keyz2.KeyW) { player2.y -= player2.speed } else if (keyz2.KeyS) { player2.y += player2.speed };
+}
 
-    draw();
+function checkCol(ob1, ob2) {
+    // console.log(ob1.x);
+    // console.log(ob2.x+ob2.width);
+
+/*     if(ob1.x<ob2.x+ob2.width && ob1.x+ob1.width > ob2.x)
+    {
+        console.log('X hit')
+    }
+
+    if(ob1.y<ob2.y+ob2.height && ob1.y+ob1.height > ob2.y)
+    {
+        console.log('Y hit')
+    } */
+
+    let val = ob1.x<ob2.x+ob2.width && ob1.x+ob1.width > ob2.x && ob1.y<ob2.y+ob2.height && ob1.y+ob1.height > ob2.y
+
+    if (val) {
+        console.log(val);
+    }
+    return val;
 }
 
 // drawing function
@@ -52,7 +69,9 @@ function move() {
 function draw() {
     // clear history of drawing
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    move();
 
+    checkCol(player1, player2);
 
     // player 1
     ctx.fillStyle = 'blue';
@@ -70,4 +89,6 @@ function draw() {
     ctx.textAlign = 'center'
     ctx.fillStyle = 'red';
     ctx.fillText(output, 300, 30);
+
+    requestAnimationFrame(draw);
 }
