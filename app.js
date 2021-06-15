@@ -1,9 +1,21 @@
 const canvas = document.querySelector('#myCanvas');
 const ctx = canvas.getContext('2d');
 const player = { x: 50, y: 50 };
-const keys = { right: false, left: false, up: false, down: false };
+const keyz = { ArrowRight: false, ArrowLeft: false, ArrowUp: false, ArrowDown: false };
 draw();
 
+document.addEventListener('keydown', keyDown);
+document.addEventListener('keyup', keyUp);
+
+function keyDown(e) {
+    keyz[e.code] = true;
+    console.log(keyz)
+}
+
+function keyUp(e) {
+    keyz[e.code] = false;
+    console.log(keyz)
+}
 
 
 function draw() {
